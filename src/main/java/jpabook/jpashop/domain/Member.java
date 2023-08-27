@@ -36,6 +36,7 @@ public class Member {
      * 다르게 표현하면, mappedBy는 해당 엔티티가 관계에서 주인이 아니며,
      * 대신 다른 엔티티에서 이미 관계가 매핑되었다는 것을 지정하는 역할을 합니다.
      * mappedBy가 지정된 엔티티 쪽에서는 데이터베이스 연관 관계의 CRUD를 수행하지 않습니다.
+     *
      */
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
