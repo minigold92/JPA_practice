@@ -30,7 +30,7 @@ public class Order {
     @JoinColumn(name = "member_id")//조인 컬럼을 무엇으로 할 것인가?
     private Member member;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order",  cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     /**
@@ -45,4 +45,24 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;//주문 상태 [ORDER, CANCEL]
+
+    /**
+     * 연관관계 편의 메서드. DB에 저장되는 것은 연관관계 주인으로 결정되지만
+     * 코드에서 사용할때 양쪽에 정상적으로 들어가야, 편리함.
+     *
+     */
+    public void setMember(Member member) {
+        this.member = member;
+        member.getOrders().add(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
 }
